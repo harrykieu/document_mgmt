@@ -1,4 +1,4 @@
-from function import addDocument,delDocument,modDocument,showDocument
+from function import *
 class Document:
     def __init__(self,name,author,publisher,yearPublish,note):
         self.name = name 
@@ -18,8 +18,8 @@ class Document:
         self.publisher = publisher
     def get_publisher(self):
         return self.publisher
-    def set_yearPublisher(self,yearPublisher):
-        self.yearPublisher = yearPublisher 
+    def set_yearPublisher(self,yearPublish):
+        self.yearPublish = yearPublish 
     def get_yearPublish(self):
         return self.yearPublish
     def set_note(self,note):
