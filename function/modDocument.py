@@ -1,20 +1,21 @@
-# Must return a Document
-# Must return a Document
-def modify_document(Document, name=None, author=None, publisher=None, yearPublish=None, note=None):
-# Modify the specified attributes of the document
+# Must return a DocumentBase
+from main_classes import DocumentBase as DocumentBase
+def modify_DocumentBase(DocumentBaseBase, name=None, author=None, publisher=None, yearPublish=None, note=None):
+# Modify the specified attributes of the DocumentBase
     if name is not None:
-        Document.set_name()
-        Document.get_name()
+        DocumentBase.set_name()
+        DocumentBase.get_name()
     if author is not None:
-        Document.set_author()
-        Document.get_author()
+        DocumentBase.set_author()
+        DocumentBase.get_author()
     if publisher is not None:
-        Document.set_publisher()
-        Document.get_publisher()
+        DocumentBase.set_publisher()
+        DocumentBase.get_publisher()
     if yearPublish is not None:
-        Document.set_yearPublish()
-        Document.get_yearPublish()
+        DocumentBase.set_yearPublish()
+        DocumentBase.get_yearPublish()
     if note is not None:
-        Document.set_note()
-        Document.get_note()
-    return Document
+        DocumentBase.set_note()
+        DocumentBase.get_note()
+    return DocumentBase
+# fix lai ham 
