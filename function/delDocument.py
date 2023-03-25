@@ -1,5 +1,5 @@
 # Must return a Document
-def removeDocument(document_list, name):
+def delDocument(document_list, name):
     # Find the document with the given name
     for document in document_list:
         if document.get_name() == name:
