@@ -19,3 +19,4 @@ def modify_DocumentBase(DocumentBaseBase, name=None, author=None, publisher=None
         DocumentBase.get_note()
     return DocumentBase
 # fix lai ham 
+# sua lai function

@@ -11,5 +11,6 @@ my_doc = {
 def show_document(document):
     # fix lai ham show_document
     print(modified_doc)
+    # in tung thuoc tinh cua document
 
 #coombine the mod function, show function and class Document to check this code is run or not

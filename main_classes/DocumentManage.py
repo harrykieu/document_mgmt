@@ -5,6 +5,9 @@ class DocumentManage():
     def __init__(self) -> None:
         self.__document_list = []
     
+    def _get_document_list(self) -> int:
+        return self.__document_list
+    
     def _get_total_document(self) -> int:
         return len(self.__document_list)
     
@@ -41,4 +44,6 @@ class DocumentManage():
             for document in self.__document_list:
                 writer.writerow(document._to_csv())
 
-    
+    def _backup_data(self) -> None:
+        # add content
+    # bo sung ham luu data thanh file
