@@ -117,16 +117,15 @@ class DocWindow:
             document_manager.add(data)
 
     def remove_data(self):
-        data = self.remove_entry.get().strip()
-        if data:
-            document_manager = DocManage("manage.txt")
-            with open("manage.txt", "r") as file:
-                lines = file.readlines()
-                file.seek(0)
-                for line in lines:
-                    if not line.startswith(data):
-                        file.write(line)
-                file.truncate()
+        filename = "manage.txt"
+        remove_name = self.remove_entry.get()
+        with open(filename, "r") as file:
+            lines = file.readlines()
+        with open(filename, "w") as file:
+            for line in lines:
+                if remove_name not in line:
+                    file.write(line)
+
 
     def display_data(self):
         ShowUp()
