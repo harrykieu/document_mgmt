@@ -52,6 +52,4 @@ class SignupWindow:
         signup_button = tk.Button(signup_frame, text="Sign up", command=signup.create_account)
         signup_button.pack(padx=10, pady=10)
 
-root = tk.Tk()
-app = SignupWindow(root)
-root.mainloop()
+

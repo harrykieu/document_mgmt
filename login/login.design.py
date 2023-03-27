@@ -1,6 +1,6 @@
 import tkinter as tk
 from submit import Login
-from signup import Signup, SignupWindow
+from signup import SignupWindow
 
 class LoginWindow:
     def __init__(self, master):
