@@ -10,7 +10,7 @@ def addDocument(dm):
     __note = input("Enter any notes about the document: ")
 
     # Create a new Document object and add it to the list
-    new_document = Document(__title, __author, __publisher, __year, __note)
+    new_document = DocumentBase(__title, __author, __publisher, __year, __note)
     dm._add_document(new_document)
 
     # Return the new document object
