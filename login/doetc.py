@@ -128,8 +128,8 @@ class DocWindow:
 
 
     def display_data(self):
-        ShowUp()
-
+        displayscr = tk.Toplevel()
+        app = ShowUp(displayscr)
     def dispnonadmin(self):
-        ShowUp()
-
+        displayscr = tk.Toplevel()
+        app = ShowUp(displayscr)

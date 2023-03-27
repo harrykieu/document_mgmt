@@ -60,7 +60,4 @@ class ShowUp:
             note_label = tk.Label(self.table, text=document["note"])
             note_label.grid(row=i+1, column=4)
 
-if __name__ == '__main__':
-    root = tk.Tk()
-    showup = ShowUp(root)
-    root.mainloop()
+
