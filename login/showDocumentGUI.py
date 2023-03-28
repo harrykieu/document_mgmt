@@ -1,4 +1,8 @@
 import tkinter as tk
+import os
+import sys
+import subprocess
+import tkinter.messagebox as messagebox
 
 class Result:
     def get_documents():
@@ -59,5 +63,41 @@ class ShowUp:
 
             note_label = tk.Label(self.table, text=document["note"])
             note_label.grid(row=i+1, column=4)
+
+              # create a list to store the filenames
+        self.filenames = []
+
+        # get the data from the manage.txt file
+        self.documents = Result.get_documents()
+
+        # display the filenames in a listbox
+        self.listbox = tk.Listbox(master, height=10)
+        self.listbox.pack(padx=10, pady=10)
+
+        for document in self.documents:
+            # add the filename to the list
+            self.filenames.append(document["name"])
+
+            # add the filename to the listbox
+            self.listbox.insert(tk.END, document["name"])
+
+        # bind the listbox to a function that opens the selected file
+        self.listbox.bind("<Double-Button-1>", self.open_file)
+
+    def open_file(self, event):
+        # get the selected filename from the listbox
+        selected_index = self.listbox.curselection()
+        if selected_index:
+            selected_filename = self.filenames[selected_index[0]]
+
+            # check if the file exists
+            if os.path.exists(selected_filename):
+                # open the file using the default application for its file type
+                opener = "open" if sys.platform == "darwin" else "xdg-open"
+                subprocess.call([opener, selected_filename])
+            else:
+                # display an error message if the file does not exist
+                tk.messagebox.showerror("Error", "File not found!")
+
 
 
