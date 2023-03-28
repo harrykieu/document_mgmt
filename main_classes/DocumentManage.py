@@ -1,11 +1,10 @@
-from function import showDocument
 import csv
 
 class DocumentManage():
     def __init__(self) -> None:
         self.__document_list = []
     
-    def _get_document_list(self) -> int:
+    def _get_document_list(self) -> list:
         return self.__document_list
     
     def _get_total_document(self) -> int:
@@ -16,10 +15,9 @@ class DocumentManage():
         self.__document = document
         self.__document_list.append(self.__document)
     
-    def _show_all_document(self) -> None:
+    def _get_all_documents(self) -> list:
         if self._get_total_document() != 0:
-            for document in self.__document_list:
-                showDocument(document)
+            return self.__document_list
     
     def _del_document(self,name) -> None:
         for document in self.__document_list:
@@ -32,8 +30,6 @@ class DocumentManage():
             
                 # Remove the document from the list
                 self._get_document_list().remove(document)
-
-            # Return the modified document object
             
     def _sort_document(self,condition) -> list:
         self.__sorted_list = self.__document_list.copy()
@@ -56,7 +52,7 @@ class DocumentManage():
             writer = csv.writer(csvfile)
             writer.writerow(["Name", "Author", "Publisher", "Year Publish", "Note"])
             for document in self.__document_list:
-                writer.writerow(document._to_csv())
+                writer.writerow(document._get_document())
 
     def _backup_data(self) -> None:
         pass

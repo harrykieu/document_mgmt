@@ -4,28 +4,13 @@ import sys
 import subprocess
 import tkinter.messagebox as messagebox
 
-class Result:
-    def get_documents():
-        documents = []
-        with open("manage.txt", "r") as file:
-            for line in file:
-                document = line.strip().split(",")
-                documents.append({
-                    "name": document[0],
-                    "author": document[1],
-                    "publisher": document[2],
-                    "yearPublish": document[3],
-                    "note": document[4]
-                })
-        return documents
-
 class ShowUp:
-    def __init__(self, master):
-        self.master = master
-        master.title("Document Manager")
+    def __init__(self, document_manager, window):
+        self.window = window
+        window.title("Document Manager")
 
         # create a table to display the data
-        self.table = tk.Frame(master)
+        self.table = tk.Frame(window)
         self.table.pack(padx=10, pady=10)
 
         # create the headers
@@ -44,34 +29,31 @@ class ShowUp:
         self.note_label = tk.Label(self.table, text="Note")
         self.note_label.grid(row=0, column=4)
 
-        # get the data from the manage.txt file
-        self.documents = Result.get_documents()
+        # get the data 
+        self.documents = document_manager._get_all_documents()
 
         # display the data in the table
         for i, document in enumerate(self.documents):
-            name_label = tk.Label(self.table, text=document["name"])
+            name_label = tk.Label(self.table, text=document._get_name())
             name_label.grid(row=i+1, column=0)
 
-            author_label = tk.Label(self.table, text=document["author"])
+            author_label = tk.Label(self.table, text=document._get_author())
             author_label.grid(row=i+1, column=1)
 
-            publisher_label = tk.Label(self.table, text=document["publisher"])
+            publisher_label = tk.Label(self.table, text=document._get_publisher())
             publisher_label.grid(row=i+1, column=2)
 
-            yearPublish_label = tk.Label(self.table, text=document["yearPublish"])
+            yearPublish_label = tk.Label(self.table, text=document._get_yearPublish())
             yearPublish_label.grid(row=i+1, column=3)
 
-            note_label = tk.Label(self.table, text=document["note"])
+            note_label = tk.Label(self.table, text=document._get_note())
             note_label.grid(row=i+1, column=4)
 
               # create a list to store the filenames
         self.filenames = []
 
-        # get the data from the manage.txt file
-        self.documents = Result.get_documents()
-
         # display the filenames in a listbox
-        self.listbox = tk.Listbox(master, height=10)
+        self.listbox = tk.Listbox(window, height=10)
         self.listbox.pack(padx=10, pady=10)
 
         for document in self.documents:

@@ -1,12 +1,13 @@
 from function import *
 
 class DocumentBase:
-    def __init__(self,name,author,publisher,yearPublish,note):
+    def __init__(self,name,author,publisher,yearPublish,note,content):
         self.__name = name 
         self.__author = author 
         self.__publisher = publisher 
         self.__yearPublish = yearPublish
         self.__note = note
+        self.__content = content
     
     def _set_name(self,name):
         self.__name = name
@@ -38,5 +39,11 @@ class DocumentBase:
     def _get_note(self) :
         return self.__note
     
-    def _to_csv(self):
+    def _set_content(self,content):
+        self.__content = content
+        
+    def _get_content(self):
+        return self.__content
+    
+    def _get_document(self):
         return [self.__name,self.__author,self.__publisher,self.__yearPublish,self.__note]
