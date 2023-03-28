@@ -20,7 +20,21 @@ class DocumentManage():
         if self._get_total_document() != 0:
             for document in self.__document_list:
                 showDocument(document)
+    
+    def _del_document(self,name) -> None:
+        for document in self.__document_list:
+            if name == document._get_name():
+                document._set_name(None)
+                document._set_author(None)
+                document._set_publisher(None)
+                document._set_yearPublisher(None)
+                document._set_note(None)
+            
+                # Remove the document from the list
+                self._get_document_list().remove(document)
 
+            # Return the modified document object
+            
     def _sort_document(self,condition) -> list:
         self.__sorted_list = self.__document_list.copy()
         if condition == "name":
@@ -45,5 +59,6 @@ class DocumentManage():
                 writer.writerow(document._to_csv())
 
     def _backup_data(self) -> None:
+        pass
         # add content
-    # bo sung ham luu data thanh file
+        # bo sung ham luu data thanh file
