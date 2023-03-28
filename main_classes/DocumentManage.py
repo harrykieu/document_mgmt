@@ -1,4 +1,5 @@
 import csv
+import os
 
 class DocumentManage():
     def __init__(self) -> None:
@@ -19,7 +20,7 @@ class DocumentManage():
         if self._get_total_document() != 0:
             return self.__document_list
     
-    def _del_document(self,name) -> None:
+    def _delete_document(self,name) -> bool:
         for document in self.__document_list:
             if name == document._get_name():
                 document._set_name(None)
@@ -30,6 +31,8 @@ class DocumentManage():
             
                 # Remove the document from the list
                 self._get_document_list().remove(document)
+                return True
+        return False
             
     def _sort_document(self,condition) -> list:
         self.__sorted_list = self.__document_list.copy()
@@ -48,13 +51,9 @@ class DocumentManage():
         return self.__sorted_list
 
     def _export_csv(self) -> None:
-        with open("document.csv", "w", newline='') as csvfile:
+        self.parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        with open(f"{self.parent_path}\\document.csv", "w", newline='') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerow(["Name", "Author", "Publisher", "Year Publish", "Note"])
             for document in self.__document_list:
                 writer.writerow(document._get_document())
-
-    def _backup_data(self) -> None:
-        pass
-        # add content
-        # bo sung ham luu data thanh file

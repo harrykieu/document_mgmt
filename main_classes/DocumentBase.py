@@ -1,13 +1,13 @@
 from function import *
 
 class DocumentBase:
-    def __init__(self,name,author,publisher,yearPublish,note,content):
+    def __init__(self,name,author,publisher,yearPublish,note):
         self.__name = name 
         self.__author = author 
         self.__publisher = publisher 
         self.__yearPublish = yearPublish
         self.__note = note
-        self.__content = content
+        self.__content = ""
     
     def _set_name(self,name):
         self.__name = name

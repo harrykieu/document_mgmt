@@ -1,29 +1,14 @@
 import tkinter as tk
 from login.signupGUI import SignupWindow
-from login.manageDocumentGUI import DocWindow
+from login.manageGUI import DocWindow
+from login.forget import ForgetPassword
 import os
 
-class ErrorWindow:
-    def __init__(self,window):
-        self.window = window
-        self.window.title("Error Window")
-
-        error_frame = tk.Frame(window)
-        error_frame.pack(pady=10)
-
-        label = tk.Label(error_frame, text="Wrong username and/or password!")
-        label.grid(row=0,column=0,padx=10, pady=10)
-
-        ok_button = tk.Button(error_frame, text="OK", command=self.window.destroy)
-        ok_button.grid(row=1,column=0,padx=10, pady=10)
-
-        window.mainloop()
-
-class Login:
+class LoginLogic:
     def __init__(self, username_input, password_input):
         self.username_input = username_input
         self.password_input = password_input
-        self.parent_path = (os.path.dirname(os.path.abspath(__file__)))
+        self.root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
     def check_user_pass(file_path, username, password):
         with open(file_path) as f:
@@ -40,70 +25,83 @@ class Login:
                 return True
         return False
 
-    def signin(self,document_manage,window,label):
+    def signin(self,document_manage,window):
+        # get the username and password from the input fields
         username = self.username_input.get()
         password = self.password_input.get()
 
-        if Login.check_user_pass(f"{self.parent_path}/admin.dat", username, password):
+        # check if the username and password are correct
+        if LoginLogic.check_user_pass(f"{self.root_path}\\data\\admin.dat", username, password):
             window.destroy()
             window = DocWindow(document_manage, admin=True)
-            window.show_options()
-        elif Login.check_user_pass(f"{self.parent_path}/nonadmin.dat", username, password):
+        elif LoginLogic.check_user_pass(f"{self.root_path}\\data\\nonadmin.dat", username, password):
             window.destroy()
             window = DocWindow(document_manage, admin=False)
-            window.show_options()
         else:
-            error_window = tk.Toplevel(window)
-            error_dialog = ErrorWindow(error_window)
+            # display the error message on new window
+            tk.messagebox.showerror("Error", "Wrong username and/or password!")
             self.username_input.delete(0, tk.END)
             self.password_input.delete(0, tk.END)
 
 
 class LoginWindow:
-    def __init__(self,window,document_manage):
+    def __init__(self, window, document_manage):
         self.window = window
         self.window.title("Login Window")
 
+        # get the root folder path
+        self.root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        # get document_manage instance from the main.py file
         self.document_manage = document_manage
 
-        canvas = tk.Canvas(window, width=800, height=600)
-        canvas.place(x=0, y=0)
-
         # load the background image
-        bg_image = tk.PhotoImage(file="/home/hhk/Desktop/document_mgmt/Username.png")
+        bg_image = tk.PhotoImage(file=f"{self.root_path}\\backgr.png")
 
-        # add the image to the canvas as the background
-        canvas.create_image(0, 0, anchor=tk.NW, image=bg_image)
-        # set window size
-        window.geometry(f"{800}x{600}")
-        #window.resizable(0, 0)
+        # create a label with the background image as its content
+        bg_label = tk.Label(self.window, image=bg_image)
+        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        login_frame = tk.Frame(window)
+        # create a frame to hold the login form
+        login_frame = tk.Frame(self.window)
         login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
-        label = tk.Label(login_frame, text="")
-        label.place(x=200, y=0)
-
+        # create the login form elements: username, password, login button, signup button, "forgot password" link
         username_label = tk.Label(login_frame, text="Username:")
-        username_label.place(x=100, y=50)
+        username_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
         self.username_input = tk.Entry(login_frame)
-        self.username_input.place(x=200, y=50)
+        self.username_input.grid(row=0, column=1, padx=10, pady=10)
 
         password_label = tk.Label(login_frame, text="Password:")
-        password_label.place(x=100, y=100)
+        password_label.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
         self.password_input = tk.Entry(login_frame, show="*")
-        self.password_input.place(x=200, y=100)
+        self.password_input.grid(row=1, column=1, padx=10, pady=10)
 
-        login = Login(self.username_input, self.password_input)
+        # create the Login instance
+        login = LoginLogic(self.username_input, self.password_input)
 
-        signin_button = tk.Button(login_frame, text="Sign In", command=lambda: login.signin(self.document_manage, self.window, label))
-        signin_button.place(x=150, y=150)
+        # create the login button
+        login_button = tk.Button(login_frame, text="Sign In", command=lambda: login.signin(self.document_manage, self.window))
+        login_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
 
+        # create the signup button
         signup_button = tk.Button(login_frame, text="Sign Up", command=self.open_signup_window)
-        signup_button.place(x=250, y=150)
+        signup_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
 
-        window.mainloop()
+        # create the "forgot password" link
+        forget_label = tk.Label(login_frame, text="Forget password?", cursor="hand2", fg="blue")
+        forget_label.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        forget_label.bind("<Button-1>", self.open_forget_window)
 
+        # set window size and disable resizing
+        self.window.geometry(f"{bg_image.width()}x{bg_image.height()}")
+        self.window.resizable(0, 0)
+
+        self.window.mainloop()
+
+    def open_forget_window(self, event):
+        forget_window = tk.Toplevel(self.window)
+        app = ForgetPassword(forget_window)
 
     def open_signup_window(self):
         signup_window = tk.Toplevel(self.window)
