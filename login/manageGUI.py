@@ -2,7 +2,8 @@ import tkinter as tk
 from login.showDocGUI import ShowUp
 from login.addGUI import AddGUI
 from login.removeGUI import RemoveGUI
-from main_classes.DocumentBase import DocumentBase as Document
+from login.findGUI import FindGUI
+import login
 import os
 import tkinter.messagebox as messagebox
 
@@ -13,7 +14,12 @@ class DocWindow:
 
         # create a new window
         self.window = tk.Tk()
-        self.window.title("Document Manager")
+        
+        # set custom window title
+        if (self.admin==True):
+            self.window.title("Document Manager - Admin")
+        else:
+            self.window.title("Document Manager")
 
         # get the root folder path
         self.root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -21,25 +27,17 @@ class DocWindow:
         # get document_manage instance from the main.py file
         self.document_manage = document_manage
 
-        # load the background image
-        #bg_image = tk.PhotoImage(file=f"{self.root_path}\\backgr.png") # For Windows
-        bg_image = tk.PhotoImage(file=f"{self.root_path}/backgr.png") # For Linux
-
-        # create a label with the background image as its content
-        bg_label = tk.Label(self.window, image=bg_image)
-        bg_label.place(x=0, y=0, relwidth=1, relheight=1)
-
         # create a frame to hold the login form
         login_frame = tk.Frame(self.window)
-        login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        login_frame.place(relx=0.5,rely=0.5,anchor=tk.CENTER)
 
         # create welcome label
         self.welcome_label = tk.Label(login_frame, text="Welcome to Document Manager!", font=("Helvetica", 20))
-        self.welcome_label.grid(row=0, column=0, columnspan=4, padx=10, pady=10)
+        self.welcome_label.grid(row=0, column=0, columnspan=5, padx=10, pady=10)
 
         # create the sub welcome label
         self.sub_welcome_label = tk.Label(login_frame, text="Please select an option from the list below:", font=("Helvetica", 15))
-        self.sub_welcome_label.grid(row=1, column=0, columnspan=4, padx=10, pady=10)
+        self.sub_welcome_label.grid(row=1, column=0, columnspan=5, padx=10, pady=10)
 
         # Add button
         self.add_button = tk.Button(login_frame, text="Add", width=15, height=1, command=lambda: self._add_data(document_manage))
@@ -57,12 +55,20 @@ class DocWindow:
         self.display_button = tk.Button(login_frame, text="Display", width=15, height=1, command=lambda: self._display_data(document_manage))
         self.display_button.grid(row=2, column=2, padx=10, pady=10)
 
+        # Find button
+        self.find_button = tk.Button(login_frame, text="Find", width=15, height=1, command=lambda: self._find_data(document_manage))
+        self.find_button.grid(row=2, column=3, padx=10, pady=10)
+
         # Export button
         self.export_button = tk.Button(login_frame, text="Export to CSV", width=15, height=1, command=lambda: self._export_data(document_manage))
-        self.export_button.grid(row=2, column=3, padx=10, pady=10)
+        self.export_button.grid(row=2, column=4, padx=10, pady=10)
+        
+        # Logout button
+        self.logout_button = tk.Button(login_frame, text="Logout",  width=15, height=1, command=lambda: self._logout(self.document_manage,self.window))
+        self.logout_button.grid(row=3, column=2, padx=10, pady=10)
 
         # set window size and disable resizing
-        self.window.geometry(f"{bg_image.width()}x{bg_image.height()}")
+        self.window.geometry(f"{1280}x{720}")
         self.window.resizable(0, 0)
 
         self.window.mainloop()
@@ -79,6 +85,15 @@ class DocWindow:
         displayscr = tk.Toplevel()
         app = ShowUp(document_manage,displayscr)
 
+    def _find_data(self,document_manage):
+        displayscr = tk.Toplevel()
+        app = FindGUI(document_manage,displayscr)
+
     def _export_data(self,document_manage):
-        document_manage._export_csv()
-        messagebox.showinfo("Success", "Export successful!")
+        self.file_path = document_manage._export_csv()
+        messagebox.showinfo("Success", f"Export successful!\nFile location: {self.file_path}")
+    
+    def _logout(self,document_manage,window):
+        window.destroy()
+        displayscr = tk.Tk()
+        window = login.loginGUI.LoginGUI(document_manage,displayscr)

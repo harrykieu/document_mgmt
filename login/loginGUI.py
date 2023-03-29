@@ -1,7 +1,7 @@
 import tkinter as tk
-from login.signupGUI import SignupWindow
+from login.signupGUI import SignupGUI
 from login.manageGUI import DocWindow
-from login.forget import ForgetPassword
+from login.forgetGUI import ForgetGUI
 import os
 
 class LoginLogic:
@@ -35,8 +35,8 @@ class LoginLogic:
         #if LoginLogic.check_user_pass(f"{self.root_path}\\data\\admin.dat", username, password): # For Windows
             window.destroy()
             window = DocWindow(document_manage, admin=True)
-        #elif LoginLogic.check_user_pass(f"{self.root_path}/data/nonadmin.dat", username, password): # For Linux
-        elif LoginLogic.check_user_pass(f"{self.root_path}\\data\\nonadmin.dat", username, password): # For Windows
+        elif LoginLogic.check_user_pass(f"{self.root_path}/data/nonadmin.dat", username, password): # For Linux
+        #elif LoginLogic.check_user_pass(f"{self.root_path}\\data\\nonadmin.dat", username, password): # For Windows
             window.destroy()
             window = DocWindow(document_manage, admin=False)
         else:
@@ -46,10 +46,10 @@ class LoginLogic:
             self.password_input.delete(0, tk.END)
 
 
-class LoginWindow:
-    def __init__(self, window, document_manage):
+class LoginGUI:
+    def __init__(self, document_manage, window):
         self.window = window
-        self.window.title("Login Window")
+        self.window.title("Login    ")
 
         # get the root folder path
         self.root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -87,9 +87,10 @@ class LoginWindow:
         login_button = tk.Button(login_frame, text="Sign In", command=lambda: login.signin(self.document_manage, self.window))
         login_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
 
-        # create the signup button
-        signup_button = tk.Button(login_frame, text="Sign Up", command=self.open_signup_window)
-        signup_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        # create the "sign up" link
+        signup_link = tk.Label(login_frame, text="No account? Sign up here.", cursor="hand2", fg="blue")
+        signup_link.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        signup_link.bind("<Button-1>", self.open_signup_window)
 
         # create the "forgot password" link
         forget_label = tk.Label(login_frame, text="Forget password?", cursor="hand2", fg="blue")
@@ -102,11 +103,13 @@ class LoginWindow:
 
         self.window.mainloop()
 
+    def open_signup_window(self,event):
+        signup_window = tk.Toplevel(self.window)
+        app = SignupGUI(signup_window)
+
     def open_forget_window(self, event):
         forget_window = tk.Toplevel(self.window)
-        app = ForgetPassword(forget_window)
+        app = ForgetGUI(forget_window)
 
-    def open_signup_window(self):
-        signup_window = tk.Toplevel(self.window)
-        app = SignupWindow(signup_window)
+
 

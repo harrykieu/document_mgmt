@@ -66,9 +66,9 @@ class AddGUI:
             # Create a Document instance based on 5 properties
             self.document = DocumentBase(name,author,publisher,yearPublish,note)
             document_manage._add_document(self.document)
-            messagebox.showinfo("Create document","Add success!")
+            messagebox.showinfo("Add document","Add success!")
         else:
-            messagebox.showerror("Create document","Error! Please fill in all fields")
+            messagebox.showerror("Add document","Error! Please fill in all fields")
             self.name_entry.delete(0, tk.END)
             self.author_entry.delete(0, tk.END)
             self.publisher_entry.delete(0, tk.END)

@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import os
 
-class ForgetPassword:
+class ForgetGUI:
     def __init__(self, window):
 
         self.window = window
@@ -21,8 +21,11 @@ class ForgetPassword:
         self.recoverycode_input = tk.Entry(recover_frame)
         self.recoverycode_input.grid(row=1, column=1, padx=10, pady=10, sticky=tk.W)
 
-        recover_button = tk.Button(recover_frame, text="Recover", command=self.recover_password)
-        recover_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        recover_button = tk.Button(recover_frame, text="Recover", width=10, height = 1, command=self.recover_password)
+        recover_button.grid(row=2, column=0, padx=10, pady=10, sticky=tk.NSEW)
+
+        cancel_button = tk.Button(recover_frame, text="Cancel", width=10, height = 1, command=window.destroy)
+        cancel_button.grid(row=2, column=1, padx=10, pady=10, sticky=tk.NSEW)
 
     def read_accounts(self, filename):
         with open(filename) as f:

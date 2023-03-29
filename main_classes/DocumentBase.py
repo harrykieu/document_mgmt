@@ -1,5 +1,3 @@
-from function import *
-
 class DocumentBase:
     def __init__(self,name,author,publisher,yearPublish,note):
         self.__name = name 
