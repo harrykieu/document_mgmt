@@ -52,7 +52,8 @@ class DocumentManage():
 
     def _export_csv(self) -> None:
         self.parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        with open(f"{self.parent_path}\\document.csv", "w", newline='') as csvfile:
+        #with open(f"{self.parent_path}\\document.csv", "w", newline='') as csvfile: # For Windows
+        with open(f"{self.parent_path}/document.csv", "w", newline='') as csvfile: # For Linux
             writer = csv.writer(csvfile)
             writer.writerow(["Name", "Author", "Publisher", "Year Publish", "Note"])
             for document in self.__document_list:
