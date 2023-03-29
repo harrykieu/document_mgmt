@@ -85,3 +85,5 @@ class ForgetGUI:
         password_text.config(state="disabled")
         password_text.pack(padx=10, pady=10)
 
+#enter username and recovery code to get there own password
+# (recovery code is the code user use to remember like user phone number)
