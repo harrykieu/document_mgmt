@@ -3,19 +3,18 @@ from tkinter import messagebox
 import os
 
 class Signup:
-    def __init__(self, username_input, password_input, recovery_code_input):
+    def __init__(self, username_input, password_input):
         self.username_input = username_input
         self.password_input = password_input
-        self.recovery_code_input = recovery_code_input
 
     def create_account(self):
         username = self.username_input.get()
         password = self.password_input.get()
-        recovery_code = self.recovery_code_input.get()
         self.parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
-        with open(f"{self.parent_path}/data/nonadmin.dat") as f:
+        #with open(f"{self.parent_path}/data/nonadmin.dat") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\nonadmin.dat") as f: # For Windows
             data = f.read().strip()
             if "\nEnd\n" not in data:
                 print("Invalid file format")
@@ -31,10 +30,12 @@ class Signup:
         usernames.append(username)
         passwords.append(password)
 
-        with open(f"{self.parent_path}/data/nonadmin.dat", "w") as f:
+        #with open(f"{self.parent_path}/data/nonadmin.dat", "w") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\nonadmin.dat", "w") as f: # For Windows
             f.write("\n".join(usernames) + "\nEnd\n" + "\n".join(passwords))
 
-        with open(f"{self.parent_path}/data/data.dat") as f:
+        #with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
             data = f.read().strip()
             if "\nEnd\n" not in data:
                 print("Invalid file format")
@@ -42,9 +43,10 @@ class Signup:
             admin_codes, user_codes = data.split("\nEnd\n")
             user_codes = user_codes.strip().split("\n")
 
-        user_codes.append(recovery_code)
+        # user_codes.append(recovery_code) #must generate recovery code later
 
-        with open(f"{self.parent_path}/data/data.dat", "w") as f:
+        #with open(f"{self.parent_path}/data/data.dat", "w") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\data.dat", "w") as f: # For Windows
             f.write(admin_codes + "\nEnd\n" + "\n".join(user_codes))
 
         messagebox.showinfo("Success", "Account created successfully.")
@@ -68,12 +70,7 @@ class SignupGUI:
         self.password_input = tk.Entry(signup_frame, show="*")
         self.password_input.grid(row=1,column=1,padx=10, pady=10)
 
-        recovery_code_label = tk.Label(signup_frame, text="Recovery Code:")
-        recovery_code_label.grid(row=2,column=0,padx=10, pady=10)
-        self.recovery_code_input = tk.Entry(signup_frame)
-        self.recovery_code_input.grid(row=2,column=1,padx=10, pady=10)
-
-        signup = Signup(self.username_input, self.password_input, self.recovery_code_input)
+        signup = Signup(self.username_input, self.password_input)
         signup_button = tk.Button(signup_frame, text="Sign up", width=10, height = 1, command=signup.create_account)
         signup_button.grid(row=3,column=0,padx=10, pady=10, sticky=tk.NSEW)
 

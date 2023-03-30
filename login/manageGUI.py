@@ -1,11 +1,12 @@
 import tkinter as tk
-from login.showDocGUI import ShowUp
+import login # to import the loginGUI.py file later
+from login.showDocGUI import ShowGUI
 from login.addGUI import AddGUI
 from login.removeGUI import RemoveGUI
 from login.findGUI import FindGUI
-import login
 import os
 import tkinter.messagebox as messagebox
+import tkinter.filedialog as filedialog
 
 class DocWindow:
     def __init__(self, document_manage, admin):
@@ -43,29 +44,35 @@ class DocWindow:
         self.add_button = tk.Button(login_frame, text="Add", width=15, height=1, command=lambda: self._add_data(document_manage))
         self.add_button.grid(row=2, column=0, padx=10, pady=10)
         if not (self.admin):
-            self.add_button.config(state=tk.DISABLED)
+            self.add_button.config(state=tk.DISABLED) # disable the button if the user is not an admin
 
         # Remove button
         self.remove_button = tk.Button(login_frame, text="Remove", width=15, height=1, command=lambda: self._remove_data(document_manage))
         self.remove_button.grid(row=2, column=1, padx=10, pady=10)
         if not (self.admin):
-            self.remove_button.config(state=tk.DISABLED)
+            self.remove_button.config(state=tk.DISABLED) # disable the button if the user is not an admin
 
+        # Import button
+        self.import_button = tk.Button(login_frame, text="Import from CSV", width=15, height=1, command=lambda: self._import_data(document_manage))
+        self.import_button.grid(row=2, column=2, padx=10, pady=10)
+        if not (self.admin):
+            self.import_button.config(state=tk.DISABLED) # disable the button if the user is not an admin
+        
         # Display button
         self.display_button = tk.Button(login_frame, text="Display", width=15, height=1, command=lambda: self._display_data(document_manage))
-        self.display_button.grid(row=2, column=2, padx=10, pady=10)
+        self.display_button.grid(row=3, column=0, padx=10, pady=10)
 
         # Find button
         self.find_button = tk.Button(login_frame, text="Find", width=15, height=1, command=lambda: self._find_data(document_manage))
-        self.find_button.grid(row=2, column=3, padx=10, pady=10)
+        self.find_button.grid(row=3, column=1, padx=10, pady=10)
 
         # Export button
         self.export_button = tk.Button(login_frame, text="Export to CSV", width=15, height=1, command=lambda: self._export_data(document_manage))
-        self.export_button.grid(row=2, column=4, padx=10, pady=10)
+        self.export_button.grid(row=3, column=2, padx=10, pady=10)
         
         # Logout button
         self.logout_button = tk.Button(login_frame, text="Logout",  width=15, height=1, command=lambda: self._logout(self.document_manage,self.window))
-        self.logout_button.grid(row=3, column=2, padx=10, pady=10)
+        self.logout_button.grid(row=4, column=1, padx=10, pady=10)
 
         # set window size and disable resizing
         self.window.geometry(f"{1280}x{720}")
@@ -82,18 +89,40 @@ class DocWindow:
         app = RemoveGUI(document_manage,displayscr)
 
     def _display_data(self,document_manage):
+        if document_manage._get_total_document() == 0:
+            messagebox.showerror("Error", "No document to display!")
+            return # no document to export
         displayscr = tk.Toplevel()
-        app = ShowUp(document_manage,displayscr)
+        app = ShowGUI(document_manage,displayscr)
 
     def _find_data(self,document_manage):
+        if document_manage._get_total_document() == 0:
+            messagebox.showerror("Error", "No document to find!")
+            return # no document to export
         displayscr = tk.Toplevel()
         app = FindGUI(document_manage,displayscr)
 
     def _export_data(self,document_manage):
-        self.file_path = document_manage._export_csv()
-        messagebox.showinfo("Success", f"Export successful!\nFile location: {self.file_path}")
+        if document_manage._get_total_document() == 0:
+            messagebox.showerror("Error", "No document to export!")
+            return # no document to export
+        self.file_path = filedialog.asksaveasfilename(title = "Save As", filetypes = (("CSV files","*.csv"),), defaultextension = ".csv")
+        if self.file_path == "":
+            return # user cancelled
+        document_manage._export_csv(self.file_path)
+        messagebox.showinfo("Success", f"Export successful!")
     
+    def _import_data(self,document_manage):
+        self.file_path = filedialog.askopenfilename(title = "Open", filetypes = (("CSV files","*.csv"),), defaultextension = ".csv")
+        if self.file_path == "":
+            return # user cancelled
+        self.success = document_manage._import_csv(self.file_path)
+        if self.success == False:
+            messagebox.showerror("Error", f"Import unsuccessful! Please check CSV file.")
+        else:
+            messagebox.showinfo("Success", f"Import successful!")
+
     def _logout(self,document_manage,window):
         window.destroy()
         displayscr = tk.Tk()
-        window = login.loginGUI.LoginGUI(document_manage,displayscr)
+        window = login.loginGUI.LoginGUI(document_manage,displayscr) # avoid circular import

@@ -117,39 +117,7 @@ class ResultGUI:
 
             note_label = tk.Label(self.listdoc, text=document._get_note())
             note_label.grid(row=i+2, column=4, padx=10, pady=10, sticky=tk.NSEW)
-
-        # create a list to store the filenames
-        self.filenames = []
-
-        # display the filenames in a listbox
-        self.listbox = tk.Listbox(window, height=10)
-        self.listbox.pack(padx=10, pady=10)
-
-        for document in self.documents:
-            # add the filename to the list
-            self.filenames.append(document._get_name())
-
-            # add the filename to the listbox
-            self.listbox.insert(tk.END, document._get_name())
-
-        # bind the listbox to a function that opens the selected file
-        self.listbox.bind("<Double-Button-1>", self.open_file)
     
         # add ok button
         ok_button = tk.Button(window,text="OK",command=window.destroy)
         ok_button.pack(padx=10,pady=10,side=tk.RIGHT)
-
-    def open_file(self, event):
-        # get the selected filename from the listbox
-        selected_index = self.listbox.curselection()
-        if selected_index:
-            selected_filename = self.filenames[selected_index[0]]
-
-            # check if the file exists
-            if os.path.exists(selected_filename):
-                # open the file using the default application for its file type
-                opener = "open" if sys.platform == "darwin" else "xdg-open"
-                subprocess.call([opener, selected_filename])
-            else:
-                # display an error message if the file does not exist
-                tk.messagebox.showerror("Error", "File not found!")
