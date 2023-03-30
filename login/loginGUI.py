@@ -31,12 +31,12 @@ class LoginLogic:
         password = self.password_input.get()
 
         # check if the username and password are correct
-        #if LoginLogic.check_user_pass(f"{self.root_path}/data/admin.dat", username, password): # For Linux
-        if LoginLogic.check_user_pass(f"{self.root_path}\\data\\admin.dat", username, password): # For Windows
+        if LoginLogic.check_user_pass(f"{self.root_path}/data/admin.dat", username, password): # For Linux
+        # if LoginLogic.check_user_pass(f"{self.root_path}\\data\\admin.dat", username, password): # For Windows
             window.destroy()
             window = DocWindow(document_manage, admin=True)
-        #elif LoginLogic.check_user_pass(f"{self.root_path}/data/nonadmin.dat", username, password): # For Linux
-        elif LoginLogic.check_user_pass(f"{self.root_path}\\data\\nonadmin.dat", username, password): # For Windows
+        elif LoginLogic.check_user_pass(f"{self.root_path}/data/nonadmin.dat", username, password): # For Linux
+        # elif LoginLogic.check_user_pass(f"{self.root_path}\\data\\nonadmin.dat", username, password): # For Windows
             window.destroy()
             window = DocWindow(document_manage, admin=False)
         else:
@@ -58,8 +58,8 @@ class LoginGUI:
         self.document_manage = document_manage
 
         # load the background image
-        bg_image = tk.PhotoImage(file=f"{self.root_path}\\backgr.png") # For Windows
-        #bg_image = tk.PhotoImage(file=f"{self.root_path}/backgr.png") # For Linux
+        # bg_image = tk.PhotoImage(file=f"{self.root_path}\\backgr.png") # For Windows
+        bg_image = tk.PhotoImage(file=f"{self.root_path}/backgr.png") # For Linux
 
         # create a label with the background image as its content
         bg_label = tk.Label(self.window, image=bg_image)

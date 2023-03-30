@@ -44,15 +44,15 @@ class ForgetGUI:
         self.parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         
         # For Windows
-        admin_usernames, admin_passwords = self.read_accounts(f"{self.parent_path}\\data\\admin.dat") 
-        nonadmin_usernames, nonadmin_passwords = self.read_accounts(f"{self.parent_path}\\data\\nonadmin.dat")
+        # admin_usernames, admin_passwords = self.read_accounts(f"{self.parent_path}\\data\\admin.dat") 
+        # nonadmin_usernames, nonadmin_passwords = self.read_accounts(f"{self.parent_path}\\data\\nonadmin.dat")
         
         # For Linux
-        #admin_usernames, admin_passwords = self.read_accounts(f"{self.parent_path}/data/admin.dat")
-        #nonadmin_usernames, nonadmin_passwords = self.read_accounts(f"{self.parent_path}/data/nonadmin.dat")
+        admin_usernames, admin_passwords = self.read_accounts(f"{self.parent_path}/data/admin.dat")
+        nonadmin_usernames, nonadmin_passwords = self.read_accounts(f"{self.parent_path}/data/nonadmin.dat")
         
-        with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
-        #with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
+        #with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
+        with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
             data = f.read().strip()
             if "End" not in data:
                 print("Invalid file format")
