@@ -25,7 +25,7 @@ class DocumentBase:
     def _get_publisher(self):
         return self.__publisher
     
-    def _set_yearPublisher(self,yearPublish):
+    def _set_yearPublish(self,yearPublish):
         self.__yearPublish = yearPublish 
     
     def _get_yearPublish(self):

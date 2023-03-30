@@ -84,6 +84,8 @@ class ForgetGUI:
         password_text.insert(tk.END, password)
         password_text.config(state="disabled")
         password_text.pack(padx=10, pady=10)
-
+        # insert OK button
+        ok_button = tk.Button(password_frame, text="OK", width=10, height = 1, command=password_window.destroy)
+        ok_button.pack(padx=10, pady=10)
 #enter username and recovery code to get there own password
 # (recovery code is the code user use to remember like user phone number)
