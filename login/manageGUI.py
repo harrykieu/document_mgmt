@@ -18,9 +18,9 @@ class DocWindow:
         
         # set custom window title
         if (self.admin==True):
-            self.window.title("Document Manager - Admin")
+            self.window.title("Document Management System - Admin")
         else:
-            self.window.title("Document Manager")
+            self.window.title("Document Management System - User")
 
         # get the root folder path
         self.root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -31,9 +31,10 @@ class DocWindow:
         # create a frame to hold the login form
         login_frame = tk.Frame(self.window)
         login_frame.place(relx=0.5,rely=0.5,anchor=tk.CENTER)
+        #login_frame.pack(padx=10, pady=10)
 
         # create welcome label
-        self.welcome_label = tk.Label(login_frame, text="Welcome to Document Manager!", font=("Helvetica", 20))
+        self.welcome_label = tk.Label(login_frame, text="Welcome to Document Management System!", font=("Helvetica", 20))
         self.welcome_label.grid(row=0, column=0, columnspan=5, padx=10, pady=10)
 
         # create the sub welcome label
@@ -75,7 +76,7 @@ class DocWindow:
         self.logout_button.grid(row=4, column=1, padx=10, pady=10)
 
         # set window size and disable resizing
-        self.window.geometry(f"{1280}x{720}")
+        self.window.geometry(f"{800}x{600}")
         self.window.resizable(0, 0)
 
         self.window.mainloop()

@@ -49,7 +49,7 @@ class LoginLogic:
 class LoginGUI:
     def __init__(self, document_manage, window):
         self.window = window
-        self.window.title("Login    ")
+        self.window.title("Login")
 
         # get the root folder path
         self.root_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -69,32 +69,36 @@ class LoginGUI:
         login_frame = tk.Frame(self.window)
         login_frame.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
+        # create the Document Management System label
+        dms_label = tk.Label(login_frame, text="Document Management System", font=("Arial", 20))
+        dms_label.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+
         # create the login form elements: username, password, login button, signup button, "forgot password" link
         username_label = tk.Label(login_frame, text="Username:")
-        username_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
+        username_label.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
         self.username_input = tk.Entry(login_frame)
-        self.username_input.grid(row=0, column=1, padx=10, pady=10)
+        self.username_input.grid(row=1, column=1, padx=10, pady=10)
 
         password_label = tk.Label(login_frame, text="Password:")
-        password_label.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
+        password_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
         self.password_input = tk.Entry(login_frame, show="*")
-        self.password_input.grid(row=1, column=1, padx=10, pady=10)
+        self.password_input.grid(row=2, column=1, padx=10, pady=10)
 
         # create the Login instance
         login = LoginLogic(self.username_input, self.password_input)
 
         # create the login button
         login_button = tk.Button(login_frame, text="Sign In", command=lambda: login.signin(self.document_manage, self.window))
-        login_button.grid(row=2, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        login_button.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
 
         # create the "sign up" link
         signup_link = tk.Label(login_frame, text="No account? Sign up here.", cursor="hand2", fg="blue")
-        signup_link.grid(row=3, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        signup_link.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
         signup_link.bind("<Button-1>", self.open_signup_window)
 
         # create the "forgot password" link
         forget_label = tk.Label(login_frame, text="Forget password?", cursor="hand2", fg="blue")
-        forget_label.grid(row=4, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
+        forget_label.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
         forget_label.bind("<Button-1>", self.open_forget_window)
 
         # set window size and disable resizing
