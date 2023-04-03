@@ -1,7 +1,7 @@
 import tkinter as tk
-from login.signupGUI import SignupGUI
-from login.manageGUI import DocWindow
-from login.forgetGUI import ForgetGUI
+from gui.signupGUI import SignupGUI
+from gui.manageGUI import DocWindow
+from gui.forgetGUI import ForgetGUI
 import os
 import tkinter.messagebox as messagebox
 

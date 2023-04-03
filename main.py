@@ -1,4 +1,4 @@
-from login.loginGUI import LoginGUI
+from gui.loginGUI import LoginGUI
 import tkinter as tk
 from main_classes.DocumentManage import DocumentManage
 

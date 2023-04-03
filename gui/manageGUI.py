@@ -1,9 +1,9 @@
 import tkinter as tk
-import login # to import the loginGUI.py file later
-from login.showDocGUI import ShowGUI
-from login.addGUI import AddGUI
-from login.removeGUI import RemoveGUI
-from login.findGUI import FindGUI
+import gui # to import the loginGUI.py file later
+from gui.showDocGUI import ShowGUI
+from gui.addGUI import AddGUI
+from gui.removeGUI import RemoveGUI
+from gui.findGUI import FindGUI
 import os
 import tkinter.messagebox as messagebox
 import tkinter.filedialog as filedialog
@@ -141,7 +141,7 @@ class DocWindow:
     def _logout(self,document_manage,window):
         window.destroy()
         displayscr = tk.Tk()
-        window = login.loginGUI.LoginGUI(document_manage,displayscr) # avoid circular import
+        window = gui.loginGUI.LoginGUI(document_manage,displayscr) # avoid circular import
 
     def _open_credit_window(self,event):
         messagebox.showinfo("Credit", """This application is developed by:
