@@ -76,12 +76,12 @@ class LoginGUI:
         # create the login form elements: username, password, login button, signup button, "forgot password" link
         username_label = tk.Label(login_frame, text="Username:",bg="white")
         username_label.grid(row=1, column=0, padx=10, pady=10, sticky=tk.W)
-        self.username_input = tk.Entry(login_frame, width=30)
+        self.username_input = tk.Entry(login_frame, width=60)
         self.username_input.grid(row=1, column=1, padx=10, pady=10)
 
         password_label = tk.Label(login_frame, text="Password:",bg="white")
         password_label.grid(row=2, column=0, padx=10, pady=10, sticky=tk.W)
-        self.password_input = tk.Entry(login_frame, show="*",width=30)
+        self.password_input = tk.Entry(login_frame, show="*",width=60) # hide the password
         self.password_input.grid(row=2, column=1, padx=10, pady=10)
 
         # create the Login instance
@@ -101,7 +101,7 @@ class LoginGUI:
         forget_label.grid(row=5, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
         forget_label.bind("<Button-1>", self.open_forget_window)
 
-        # set window size and disable resizing
+        # set window size the same as image size and disable resizing
         self.window.geometry(f"{bg_image.width()}x{bg_image.height()}")
         self.window.resizable(0, 0)
 

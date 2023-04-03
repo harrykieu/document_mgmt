@@ -11,64 +11,96 @@ class Signup:
         self.recovery_code = ''
 
     def create_account(self,window):
+        # Get the parent path
+        self.parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        
+        # Get the username and password from input
         username = self.username_input.get()
         password = self.password_input.get()
-        self.recovery_code = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(10))
-        self.parent_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+        # Generate a recovery code
+        self.recovery_code = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(6))
+        
+        # Check if user fill in all the fields
         if not all([username, password]):
             messagebox.showerror("Error", "Please fill in all fields.")
             return
+        
+        # All the non-admin users data are stored in data/nonadmin.dat
+        # Format of the file: username1\nusername2\n...\nEnd\npassword1\npassword2\n...\nEnd
+        # Check if file nonadmin.dat exists, if not then create a new one
+        
+        #if not os.path.exists(f"{self.parent_path}/data/nonadmin.dat"): # For Linux
+        if not os.path.exists(f"{self.parent_path}\\data\\nonadmin.dat"): # For Windows
+            #with open(f"{self.parent_path}/data/nonadmin.dat", "w") as f: # For Linux
+            with open(f"{self.parent_path}\\data\\nonadmin.dat", "w") as f:
+                print("No nonadmin.dat file found, creating a new one...") # Log
+                f.write("End")
 
+        # Check if the nonadmin.dat file has the correct format
+        
         #with open(f"{self.parent_path}/data/nonadmin.dat") as f: # For Linux
         with open(f"{self.parent_path}\\data\\nonadmin.dat") as f: # For Windows
-            data = f.read().strip()
-            if "\nEnd\n" not in data:
-                print("Invalid file format")
+            data = f.read()
+            if "End" not in data:
+                print("Invalid file format for nonadmin.dat") # Log
                 return
-            usernames, passwords = data.split("\nEnd\n")
+            # Split the data into usernames and passwords
+            usernames, passwords = data.split("End")
             usernames = usernames.strip().split("\n")
             passwords = passwords.strip().split("\n")
+            # If there is no user signed up before, then the last element of the list is an empty string, so we remove it
+            if usernames[-1] == "":
+                usernames.pop()
+                passwords.pop()
 
+        # Check if the username is already taken
         if username in usernames:
-            print("Username is already taken.")
+            messagebox.showerror("Error","Username is already taken.")
             return
-
+        
+        # Add the new user to the data file
         usernames.append(username)
         passwords.append(password)
 
         #with open(f"{self.parent_path}/data/nonadmin.dat", "w") as f: # For Linux
         with open(f"{self.parent_path}\\data\\nonadmin.dat", "w") as f: # For Windows
-            f.write("\n".join(usernames) + "\nEnd\n" + "\n".join(passwords))
+            if len(usernames) >1 and len(passwords) >1:
+                f.write("\n".join(usernames) + "\nEnd\n" + "\n".join(passwords)) # If there is more than one user, then use newline character to separate the usernames and passwords
+            else:
+                f.write(usernames[0] + "\nEnd\n" + passwords[0]) # If there is only one user, then there is no newline character
 
-        #with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
-        with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
+        # File recovercode.dat stores all the recovery codes
+        # Check if the file exists, if not then create a new one
+        
+        #if not os.path.exists(f"{self.parent_path}/data/recovercode.dat"): # For Linux
+        if not os.path.exists(f"{self.parent_path}\\data\\recovercode.dat"): # For Windows
+            #with open(f"{self.parent_path}/data/recovercode.dat", "w") as f: # For Linux
+            with open(f"{self.parent_path}\\data\\recovercode.dat", "w") as f: # For Windows
+                print("No recovercode.dat file found, creating a new one...") # Log
+                f.write("")
+
+        # Read the data file
+        #with open(f"{self.parent_path}/data/recovercode.dat") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\recovercode.dat") as f: # For Windows
             data = f.read().strip()
-            if "\nEnd\n" not in data:
-                print("Invalid file format")
-                return
-            admin_codes, user_codes = data.split("\nEnd\n")
-            user_codes = user_codes.strip().split("\n")
+            user_codes = data.strip().split("\n")
+            # If there is no user signed up before, then the last element of the list is an empty string, so we remove it
+            if user_codes[-1] == "":
+                user_codes.pop()
 
-        #with open(f"{self.parent_path}/data/data.dat", "w") as f: # For Linux
-        with open(f"{self.parent_path}\\data\\data.dat", "w") as f: # For Windows
-            f.write(admin_codes + "\nEnd\n" + "\n".join(user_codes))
-            
-        #with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
-        with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
-            data = f.read().strip()
-            if "\nEnd\n" not in data:
-                print("Invalid file format")
-                return
-            admin_codes, user_codes = data.split("\nEnd\n")
-            user_codes = user_codes.strip().split("\n")
-
+        # Add the new user's recovery code to the data file
         user_codes.append(self.recovery_code)
-        
-        #with open(f"{self.parent_path}/data/data.dat, "w"") as f: # For Linux
-        with open(f"{self.parent_path}\\data\\data.dat", "w") as f: # For Windows
-            f.write(admin_codes + "\nEnd\n" + "\n".join(user_codes))
-        
+
+        # Save the recover codes to file
+        #with open(f"{self.parent_path}/data/recovercode.dat", "w") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\recovercode.dat", "w") as f: # For Windows
+            if len(user_codes) > 1:
+                f.write("\n".join(user_codes)) # If there is more than one user, then use newline character to separate the codes
+            else:
+                f.write(user_codes[0]) # If there is only one user, then there is no newline character
+            
+            
         # Close the signup windows
         window.destroy()
 
