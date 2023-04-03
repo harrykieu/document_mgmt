@@ -29,8 +29,8 @@ class DocWindow:
         self.document_manage = document_manage
 
         # load the background image
-        #bg_image = tk.PhotoImage(file=f"{self.root_path}\\backgr.png") # For Windows
-        bg_image = tk.PhotoImage(file=f"{self.root_path}/backgr.png") # For Linux
+        bg_image = tk.PhotoImage(file=f"{self.root_path}\\backgr.png") # For Windows
+        #bg_image = tk.PhotoImage(file=f"{self.root_path}/backgr.png") # For Linux
 
         # create a label with the background image as its content
         bg_label = tk.Label(self.window, image=bg_image)

@@ -20,8 +20,8 @@ class Signup:
             messagebox.showerror("Error", "Please fill in all fields.")
             return
 
-        with open(f"{self.parent_path}/data/nonadmin.dat") as f: # For Linux
-        # with open(f"{self.parent_path}\data\nonadmin.dat") as f: # For Windows
+        #with open(f"{self.parent_path}/data/nonadmin.dat") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\nonadmin.dat") as f: # For Windows
             data = f.read().strip()
             if "\nEnd\n" not in data:
                 print("Invalid file format")
@@ -37,12 +37,12 @@ class Signup:
         usernames.append(username)
         passwords.append(password)
 
-        with open(f"{self.parent_path}/data/nonadmin.dat", "w") as f: # For Linux
-        # with open(f"{self.parent_path}\data\nonadmin.dat", "w") as f: # For Windows
+        #with open(f"{self.parent_path}/data/nonadmin.dat", "w") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\nonadmin.dat", "w") as f: # For Windows
             f.write("\n".join(usernames) + "\nEnd\n" + "\n".join(passwords))
 
-        with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
-        # with open(f"{self.parent_path}\data\data.dat") as f: # For Windows
+        #with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
             data = f.read().strip()
             if "\nEnd\n" not in data:
                 print("Invalid file format")
@@ -50,11 +50,12 @@ class Signup:
             admin_codes, user_codes = data.split("\nEnd\n")
             user_codes = user_codes.strip().split("\n")
 
-        with open(f"{self.parent_path}/data/data.dat", "w") as f: # For Linux
-        # with open(f"{self.parent_path}\data\data.dat", "w") as f: # For Windows
+        #with open(f"{self.parent_path}/data/data.dat", "w") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\data.dat", "w") as f: # For Windows
             f.write(admin_codes + "\nEnd\n" + "\n".join(user_codes))
-
-        with open(f"{self.parent_path}/data/data.dat") as f:
+            
+        #with open(f"{self.parent_path}/data/data.dat") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\data.dat") as f: # For Windows
             data = f.read().strip()
             if "\nEnd\n" not in data:
                 print("Invalid file format")
@@ -63,8 +64,9 @@ class Signup:
             user_codes = user_codes.strip().split("\n")
 
         user_codes.append(self.recovery_code)
-
-        with open(f"{self.parent_path}/data/data.dat", "w") as f:
+        
+        #with open(f"{self.parent_path}/data/data.dat, "w"") as f: # For Linux
+        with open(f"{self.parent_path}\\data\\data.dat", "w") as f: # For Windows
             f.write(admin_codes + "\nEnd\n" + "\n".join(user_codes))
         
         # Close the signup windows
