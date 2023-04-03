@@ -4,8 +4,7 @@ from main_classes.DocumentManage import DocumentManage
 
 # Create a DocumentManage instance
 document_manage = DocumentManage()
-#flow: login -> signup/signin -> show document -> manage document
+# Create a tk window
 window = tk.Tk()
-# insert image as background
-
+# Run the login GUI
 app = LoginGUI(document_manage,window)
