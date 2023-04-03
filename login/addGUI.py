@@ -1,6 +1,5 @@
 import tkinter as tk
 from main_classes.DocumentBase import DocumentBase
-from main_classes.DocumentManage import DocumentManage
 import tkinter.messagebox as messagebox
 class AddGUI:
     def __init__(self, document_manage, window):

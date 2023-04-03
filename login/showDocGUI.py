@@ -1,5 +1,4 @@
 import tkinter as tk
-import os
 import tkinter.messagebox as messagebox
 from tkinter import ttk
 

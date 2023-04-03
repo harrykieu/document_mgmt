@@ -1,5 +1,4 @@
 import csv
-import os
 from main_classes.DocumentBase import DocumentBase
 
 class DocumentManage():
@@ -27,7 +26,7 @@ class DocumentManage():
                 document._set_name(None)
                 document._set_author(None)
                 document._set_publisher(None)
-                document._set_yearPublisher(None)
+                document._set_yearPublish(None)
                 document._set_note(None)
             
                 # Remove the document from the list
