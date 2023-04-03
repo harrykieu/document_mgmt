@@ -11,7 +11,7 @@ class ForgetGUI:
         recover_frame = tk.Frame(window)
         recover_frame.pack(padx=10, pady=10)
 
-        account_label = tk.Label(recover_frame, text="Account:")
+        account_label = tk.Label(recover_frame, text="Username:")
         account_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
         self.account_input = tk.Entry(recover_frame)
         self.account_input.grid(row=0, column=1, padx=10, pady=10, sticky=tk.W)
