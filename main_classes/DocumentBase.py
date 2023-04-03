@@ -1,9 +1,9 @@
 class DocumentBase:
-    def __init__(self,name,author,publisher,yearPublish,note):
+    def __init__(self,name,author,publisher,year_publish,note):
         self.__name = name 
         self.__author = author 
         self.__publisher = publisher 
-        self.__yearPublish = yearPublish
+        self.__year_publish = year_publish
         self.__note = note
         self.__content = ""
     
@@ -25,11 +25,11 @@ class DocumentBase:
     def _get_publisher(self):
         return self.__publisher
     
-    def _set_yearPublish(self,yearPublish):
-        self.__yearPublish = yearPublish 
+    def _set_yearPublish(self,year_publish):
+        self.__year_publish = year_publish 
     
     def _get_yearPublish(self):
-        return self.__yearPublish
+        return self.__year_publish
     
     def _set_note(self,note):
         self.__note = note
@@ -44,4 +44,4 @@ class DocumentBase:
         return self.__content
     
     def _get_document(self):
-        return [self.__name,self.__author,self.__publisher,self.__yearPublish,self.__note]
+        return [self.__name,self.__author,self.__publisher,self.__year_publish,self.__note]

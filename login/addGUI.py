@@ -11,7 +11,6 @@ class AddGUI:
         add_frame = tk.Frame(window)
         add_frame.grid(padx=10, pady=10)
 
-
         # Name
         name_label = tk.Label(add_frame, text="Name:")
         name_label.grid(row=0, column=0, padx=10, pady=10, sticky=tk.W)
@@ -57,17 +56,21 @@ class AddGUI:
         name = self.name_entry.get()
         author = self.author_entry.get()
         publisher = self.publisher_entry.get()
-        yearPublish = self.yearPublish_entry.get()
+        try:
+            year_publish = int(self.yearPublish_entry.get()) # Check if year of publish is a number
+        except ValueError:
+            messagebox.showerror("Add document","Error! Year of publish must be a number!")
+            return
         note = self.note_entry.get()
 
         # Check if all fields are filled
-        if name and author and publisher and yearPublish and note:    
+        if name and author and publisher and year_publish and note:    
             # Create a Document instance based on 5 properties
-            self.document = DocumentBase(name,author,publisher,yearPublish,note)
+            self.document = DocumentBase(name,author,publisher,year_publish,note)
             document_manage._add_document(self.document)
             messagebox.showinfo("Add document","Add success!")
         else:
-            messagebox.showerror("Add document","Error! Please fill in all fields")
+            messagebox.showerror("Add document","Error! Please fill in all fields!")
             self.name_entry.delete(0, tk.END)
             self.author_entry.delete(0, tk.END)
             self.publisher_entry.delete(0, tk.END)

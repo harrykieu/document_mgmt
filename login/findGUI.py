@@ -38,26 +38,32 @@ class FindGUI:
         publisher_choice = tk.Radiobutton(find_frame,text="Publisher",variable=self.choice,value="publisher")
         publisher_choice.grid(row=4,column=0,columnspan=2,padx=10,pady=10,sticky=tk.W)
 
+        # Create note choice
+        note_choice = tk.Radiobutton(find_frame,text="Note",variable=self.choice,value="note")
+        note_choice.grid(row=5,column=0,columnspan=2,padx=10,pady=10,sticky=tk.W)
+
         # Create keyword input
         find_prompt = tk.Label(find_frame,text="Keyword:")
-        find_prompt.grid(row=5,column=0,padx=10,pady=10,sticky=tk.W)
+        find_prompt.grid(row=6,column=0,padx=10,pady=10,sticky=tk.W)
         self.find_entry = tk.Entry(find_frame)
-        self.find_entry.grid(row=5,column=1,padx=10,pady=10,sticky=tk.W)
+        self.find_entry.grid(row=6,column=1,padx=10,pady=10,sticky=tk.W)
 
         # Create find and cancel button
         find_button = tk.Button(find_frame,text="Find",command=lambda: self._find_by_condition(self.document_manage,self.choice.get(),self.find_entry.get()))
-        find_button.grid(row=6,column=0,padx=10,pady=10,sticky=tk.NSEW)
+        find_button.grid(row=7,column=0,padx=10,pady=10,sticky=tk.NSEW)
 
         cancel_button = tk.Button(find_frame,text="Cancel",command=window.destroy)
-        cancel_button.grid(row=6,column=1,padx=10,pady=10,sticky=tk.NSEW)
+        cancel_button.grid(row=7,column=1,padx=10,pady=10,sticky=tk.NSEW)
 
         self.window.mainloop()
 
     def _find_by_condition(self,document_manage,choice,keyword):
+        # Call the find function in document_manage
         self.__document_found =  document_manage._find_by_condition(choice,keyword)
         if self.__document_found == None:
             messagebox.showerror("Error","No document found!")
         else:
+            # Display the result in a new window
             window = tk.Toplevel(self.window)
             result_gui = ResultGUI(self.__document_found,window)
 
@@ -75,7 +81,7 @@ class ResultGUI:
         result_frame.pack(padx=10,pady=5)
 
         # Create result label
-        result_label = tk.Label(result_frame,text=f"Found {len(document_found)} result(s): ")
+        result_label = tk.Label(result_frame,text=f"Found {len(document_found)} result(s): ",font=("Arial",16,"bold"))
         result_label.grid(row=0,column=0, columnspan=5, padx=10, pady=10, sticky=tk.W)
 
         # Create table
@@ -106,5 +112,5 @@ class ResultGUI:
             self.tabledoc.insert(parent="", index=i+1, text=i+1, values=(document._get_name(), document._get_author(), document._get_publisher(), document._get_yearPublish(), document._get_note()))
           
         # add ok button
-        ok_button = tk.Button(window,text="OK",command=window.destroy)
-        ok_button.pack(padx=10,pady=10,side=tk.RIGHT)
+        ok_button = tk.Button(window,text="OK",command=window.destroy,width=10,height=1)
+        ok_button.pack(padx=10,pady=10,side=tk.BOTTOM)

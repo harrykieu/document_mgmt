@@ -12,7 +12,7 @@ class DocumentManage():
         return len(self.__document_list)
     
     def _add_document(self,document) -> None:
-        # Make a document
+        # Make a document, then add it to the list
         self.__document = document
         self.__document_list.append(self.__document)
     
@@ -22,7 +22,9 @@ class DocumentManage():
     
     def _delete_document(self,name) -> bool:
         for document in self.__document_list:
+            # Get the document that has the same name as the name parameter
             if name == document._get_name():
+                # Remove the document's information
                 document._set_name(None)
                 document._set_author(None)
                 document._set_publisher(None)
@@ -35,24 +37,29 @@ class DocumentManage():
         return False
             
     def _find_by_condition(self,choice,keyword) -> list:
+        # Initialize the found list
         self.__document_list_found = []
+        # Check if there is any document in the list
         if self._get_total_document() != 0:
             for document in self.__document_list:
                 # Find by name
                 if choice == "name":
-                    if keyword == document._get_name():
+                    if keyword in document._get_name():
                         self.__document_list_found.append(document)
                 # Find by author
                 elif choice == "author":
-                    if keyword == document._get_author():
+                    if keyword in document._get_author():
                         self.__document_list_found.append(document)
                 # Find by publisher
                 elif choice == "publisher":
-                    if keyword == document._get_publisher():
+                    if keyword in document._get_publisher():
                         self.__document_list_found.append(document)
                 # Find by year publish
                 elif choice == "yearPublish":
                     if keyword == document._get_yearPublish():
+                        self.__document_list_found.append(document)
+                elif choice == "note":
+                    if keyword in document._get_note():
                         self.__document_list_found.append(document)
             return self.__document_list_found
         else:

@@ -42,46 +42,51 @@ class DocWindow:
         #login_frame.pack(padx=10, pady=10)
 
         # create welcome label
-        self.welcome_label = tk.Label(login_frame, text="Welcome to Document Management System!", font=("Arial", 20),bg="white")
+        self.welcome_label = tk.Label(login_frame, text="WELCOME TO DOCUMENT MANAGEMENT SYSTEM!", font=("", 20, "bold"), bg="white")
         self.welcome_label.grid(row=0, column=0, columnspan=3, padx=10, pady=10)
 
         # create the sub welcome label
-        self.sub_welcome_label = tk.Label(login_frame, text="Please select an option from the list below:", font=("Arial", 15),bg="white")
+        self.sub_welcome_label = tk.Label(login_frame, text="Please select an option from the list below:", font=("", 15), bg="white")
         self.sub_welcome_label.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
 
         # Add button
-        self.add_button = tk.Button(login_frame, text="Add", width=15, height=2, command=lambda: self._add_data(document_manage))
+        self.add_button = tk.Button(login_frame, text="Add", width=15, height=2, font=("", 12), command=lambda: self._add_data(document_manage))
         self.add_button.grid(row=2, column=0, padx=10, pady=10)
         if not (self.admin):
             self.add_button.config(state=tk.DISABLED) # disable the button if the user is not an admin
 
         # Remove button
-        self.remove_button = tk.Button(login_frame, text="Remove", width=15, height=2, command=lambda: self._remove_data(document_manage))
+        self.remove_button = tk.Button(login_frame, text="Remove", width=15, height=2, font=("", 12), command=lambda: self._remove_data(document_manage))
         self.remove_button.grid(row=2, column=1, padx=10, pady=10)
         if not (self.admin):
             self.remove_button.config(state=tk.DISABLED) # disable the button if the user is not an admin
 
         # Import button
-        self.import_button = tk.Button(login_frame, text="Import from CSV", width=15, height=2, command=lambda: self._import_data(document_manage))
+        self.import_button = tk.Button(login_frame, text="Import from CSV", width=15, height=2, font=("", 12), command=lambda: self._import_data(document_manage))
         self.import_button.grid(row=2, column=2, padx=10, pady=10)
         if not (self.admin):
             self.import_button.config(state=tk.DISABLED) # disable the button if the user is not an admin
         
         # Display button
-        self.display_button = tk.Button(login_frame, text="Display", width=15, height=2, command=lambda: self._display_data(document_manage))
+        self.display_button = tk.Button(login_frame, text="Display", width=15, height=2, font=("", 12), command=lambda: self._display_data(document_manage))
         self.display_button.grid(row=3, column=0, padx=10, pady=10)
 
         # Find button
-        self.find_button = tk.Button(login_frame, text="Find", width=15, height=2, command=lambda: self._find_data(document_manage))
+        self.find_button = tk.Button(login_frame, text="Find", width=15, height=2, font=("", 12), command=lambda: self._find_data(document_manage))
         self.find_button.grid(row=3, column=1, padx=10, pady=10)
 
         # Export button
-        self.export_button = tk.Button(login_frame, text="Export to CSV", width=15, height=2, command=lambda: self._export_data(document_manage))
+        self.export_button = tk.Button(login_frame, text="Export to CSV", width=15, height=2, font=("", 12), command=lambda: self._export_data(document_manage))
         self.export_button.grid(row=3, column=2, padx=10, pady=10)
         
         # Logout button
-        self.logout_button = tk.Button(login_frame, text="Logout",  width=15, height=2, command=lambda: self._logout(self.document_manage,self.window))
+        self.logout_button = tk.Button(login_frame, text="Logout", width=15, height=1, command=lambda: self._logout(self.document_manage,self.window))
         self.logout_button.grid(row=4, column=1, padx=10, pady=10)
+
+        # Credit
+        credit_label = tk.Label(login_frame, text="© 2023 DQ/USTH", bg="white", cursor="hand2", fg="blue")
+        credit_label.grid(row=5, column=0, columnspan=3, padx=10, pady=10,sticky=tk.NSEW)
+        credit_label.bind("<Button-1>", self._open_credit_window)
 
         # set window size and disable resizing
         self.window.geometry(f"{bg_image.width()}x{bg_image.height()}")
@@ -100,21 +105,21 @@ class DocWindow:
     def _display_data(self,document_manage):
         if document_manage._get_total_document() == 0:
             messagebox.showerror("Error", "No document to display!")
-            return # no document to export
+            return 
         displayscr = tk.Toplevel()
         app = ShowGUI(document_manage,displayscr)
 
     def _find_data(self,document_manage):
         if document_manage._get_total_document() == 0:
             messagebox.showerror("Error", "No document to find!")
-            return # no document to export
+            return 
         displayscr = tk.Toplevel()
         app = FindGUI(document_manage,displayscr)
 
     def _export_data(self,document_manage):
         if document_manage._get_total_document() == 0:
             messagebox.showerror("Error", "No document to export!")
-            return # no document to export
+            return 
         self.file_path = filedialog.asksaveasfilename(title = "Save As", filetypes = (("CSV files","*.csv"),), defaultextension = ".csv")
         if self.file_path == "":
             return # user cancelled
@@ -137,3 +142,12 @@ class DocWindow:
         window.destroy()
         displayscr = tk.Tk()
         window = login.loginGUI.LoginGUI(document_manage,displayscr) # avoid circular import
+
+    def _open_credit_window(self,event):
+        messagebox.showinfo("Credit", """This application is developed by:
+    - Doan Tri Tien - BI12-435
+    - Kieu Huy Hai - BI12-149
+    - Vu Duc Hieu - BI12-162
+    - Bui Cong Hoang - BI12-169
+    - Le Trong Tan - BI12-395
+P/S: Plz give us maximum points ;)""")
