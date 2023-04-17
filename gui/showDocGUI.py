@@ -20,23 +20,26 @@ class ShowGUI:
         self.tabledoc.pack(padx=10, pady=10)
 
         # set the column width
-        self.tabledoc.column("#0", width=50, stretch=tk.NO)
-        self.tabledoc.column("Name", width=200, stretch=tk.NO)
-        self.tabledoc.column("Author", width=200, stretch=tk.NO)
-        self.tabledoc.column("Year Published", width=200, stretch=tk.NO)
-        self.tabledoc.column("Publisher", width=200, stretch=tk.NO)
-        self.tabledoc.column("Note", width=300, stretch=tk.NO)
+        self.tabledoc.column("#0", width=30, stretch=tk.NO)
+        self.tabledoc.column("Name", width=300, stretch=tk.NO)
+        self.tabledoc.column("Author", width=100, stretch=tk.NO)
+        self.tabledoc.column("Publisher", width=100, stretch=tk.NO)
+        self.tabledoc.column("Year Published", width=100, stretch=tk.NO)
+        self.tabledoc.column("Note", width=100, stretch=tk.NO)
 
         # create the table headers
         self.tabledoc.heading("#0", text="ID", anchor=tk.CENTER)
         self.tabledoc.heading("Name", text="Name", anchor=tk.CENTER)
         self.tabledoc.heading("Author", text="Author", anchor=tk.CENTER)
-        self.tabledoc.heading("Year Published", text="Year Published", anchor=tk.CENTER)
         self.tabledoc.heading("Publisher", text="Publisher", anchor=tk.CENTER)
+        self.tabledoc.heading("Year Published", text="Year Published", anchor=tk.CENTER)
         self.tabledoc.heading("Note", text="Note", anchor=tk.CENTER)
         
         # display the data in the table
         for i, document in enumerate(self.documents):
             self.tabledoc.insert(parent="", index=i+1, text=i+1, values=(document._get_name(), document._get_author(), document._get_publisher(), document._get_yearPublish(), document._get_note()))
 
+        # disable resizing
+        window.resizable(0,0)
+        
         self.window.mainloop()

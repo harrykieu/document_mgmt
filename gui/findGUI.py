@@ -19,7 +19,7 @@ class FindGUI:
         self.choice = tk.StringVar()
 
         # Create criteria label
-        criteria_label = tk.Label(find_frame,text="Criteria:")
+        criteria_label = tk.Label(find_frame,text="Criteria:",font=("",12,"bold"))
         criteria_label.grid(row=0,column=0,padx=10,pady=10,sticky=tk.W)
         
         # Create name choice
@@ -43,7 +43,7 @@ class FindGUI:
         note_choice.grid(row=5,column=0,columnspan=2,padx=10,pady=10,sticky=tk.W)
 
         # Create keyword input
-        find_prompt = tk.Label(find_frame,text="Keyword:")
+        find_prompt = tk.Label(find_frame,text="Keyword:",font=("",12,"bold"))
         find_prompt.grid(row=6,column=0,padx=10,pady=10,sticky=tk.W)
         self.find_entry = tk.Entry(find_frame)
         self.find_entry.grid(row=6,column=1,padx=10,pady=10,sticky=tk.W)
@@ -81,36 +81,39 @@ class ResultGUI:
         result_frame.pack(padx=10,pady=5)
 
         # Create result label
-        result_label = tk.Label(result_frame,text=f"Found {len(document_found)} result(s): ",font=("Arial",16,"bold"))
-        result_label.grid(row=0,column=0, columnspan=5, padx=10, pady=10, sticky=tk.W)
+        result_label = tk.Label(result_frame,text=f"Found {len(document_found)} result(s): ",font=("",16,"bold"))
+        result_label.grid(row=0,column=0,columnspan=5,padx=10,pady=10,sticky=tk.W)
 
         # Create table
-        self.tabledoc = ttk.Treeview(window, columns=("Name", "Author", "Publisher", "Year Published", "Note"))
-        self.tabledoc.pack(padx=10, pady=10)
+        self.tabledoc = ttk.Treeview(window,columns=("Name","Author","Publisher","Year Published","Note"))
+        self.tabledoc.pack(padx=10,pady=10)
 
         # set the column width
-        self.tabledoc.column("#0", width=50, stretch=tk.NO)
-        self.tabledoc.column("Name", width=200, stretch=tk.NO)
-        self.tabledoc.column("Author", width=200, stretch=tk.NO)
-        self.tabledoc.column("Year Published", width=200, stretch=tk.NO)
-        self.tabledoc.column("Publisher", width=200, stretch=tk.NO)
-        self.tabledoc.column("Note", width=300, stretch=tk.NO)
+        self.tabledoc.column("#0",width=50,stretch=tk.NO)
+        self.tabledoc.column("Name",width=200,stretch=tk.NO)
+        self.tabledoc.column("Author",width=200,stretch=tk.NO)
+        self.tabledoc.column("Year Published",width=200,stretch=tk.NO)
+        self.tabledoc.column("Publisher",width=200,stretch=tk.NO)
+        self.tabledoc.column("Note",width=300,stretch=tk.NO)
 
         # create the table headers
-        self.tabledoc.heading("#0", text="ID", anchor=tk.CENTER)
-        self.tabledoc.heading("Name", text="Name", anchor=tk.CENTER)
-        self.tabledoc.heading("Author", text="Author", anchor=tk.CENTER)
-        self.tabledoc.heading("Year Published", text="Year Published", anchor=tk.CENTER)
-        self.tabledoc.heading("Publisher", text="Publisher", anchor=tk.CENTER)
-        self.tabledoc.heading("Note", text="Note", anchor=tk.CENTER)
+        self.tabledoc.heading("#0",text="ID",anchor=tk.CENTER)
+        self.tabledoc.heading("Name",text="Name",anchor=tk.CENTER)
+        self.tabledoc.heading("Author",text="Author",anchor=tk.CENTER)
+        self.tabledoc.heading("Year Published",text="Year Published",anchor=tk.CENTER)
+        self.tabledoc.heading("Publisher",text="Publisher",anchor=tk.CENTER)
+        self.tabledoc.heading("Note",text="Note",anchor=tk.CENTER)
         
         # get the data
         self.documents = document_found
 
         # display the data in the table
-        for i, document in enumerate(self.documents):
-            self.tabledoc.insert(parent="", index=i+1, text=i+1, values=(document._get_name(), document._get_author(), document._get_publisher(), document._get_yearPublish(), document._get_note()))
+        for i,document in enumerate(self.documents):
+            self.tabledoc.insert(parent="",index=i+1,text=i+1,values=(document._get_name(),document._get_author(),document._get_publisher(),document._get_yearPublish(),document._get_note()))
           
         # add ok button
         ok_button = tk.Button(window,text="OK",command=window.destroy,width=10,height=1)
         ok_button.pack(padx=10,pady=10,side=tk.BOTTOM)
+
+        # disable resizing
+        window.resizable(0,0)

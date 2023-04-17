@@ -13,7 +13,7 @@ class RemoveGUI:
         add_frame.grid(padx=10, pady=10)
 
         # Prompt to enter document name
-        name_label = tk.Label(add_frame, text="Enter the name of the document you want to delete:")
+        name_label = tk.Label(add_frame, text="Enter the name of the document you want to delete:",font=("",10,"bold"))
         name_label.grid(row=0, column=0, columnspan=2, padx=10, pady=10, sticky=tk.NSEW)
         
         # Name input
@@ -28,6 +28,9 @@ class RemoveGUI:
         self.exit_button = tk.Button(add_frame, text="Cancel", width=15, height=1, command=window.destroy)
         self.exit_button.grid(row=2, column = 1, padx=10, pady=10,sticky=tk.NSEW)
 
+        # disable resizing
+        window.resizable(0,0)
+        
         window.mainloop()
 
     def remove_data(self,document_manage):
