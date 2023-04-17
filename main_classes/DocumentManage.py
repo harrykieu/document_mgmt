@@ -44,22 +44,22 @@ class DocumentManage():
             for document in self.__document_list:
                 # Find by name
                 if choice == "name":
-                    if keyword in document._get_name():
+                    if keyword in document._get_name().lower():
                         self.__document_list_found.append(document)
                 # Find by author
                 elif choice == "author":
-                    if keyword in document._get_author():
+                    if keyword in document._get_author().lower():
                         self.__document_list_found.append(document)
                 # Find by publisher
                 elif choice == "publisher":
-                    if keyword in document._get_publisher():
+                    if keyword in document._get_publisher().lower():
                         self.__document_list_found.append(document)
                 # Find by year publish
                 elif choice == "yearPublish":
                     if int(keyword) == document._get_yearPublish():
                         self.__document_list_found.append(document)
                 elif choice == "note":
-                    if keyword in document._get_note():
+                    if keyword in document._get_note().lower():
                         self.__document_list_found.append(document)
             return self.__document_list_found
         else:

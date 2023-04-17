@@ -53,26 +53,25 @@ class AddGUI:
 
     def add_data(self,document_manage):
         # Get data from input
+        year_not_int = True
         name = self.name_entry.get()
         author = self.author_entry.get()
         publisher = self.publisher_entry.get()
-        try:
-            year_publish = int(self.yearPublish_entry.get()) # Check if year of publish is a number
-        except ValueError:
-            messagebox.showerror("Add document","Error! Year of publish must be a number!")
-            return
+        year_publish = self.yearPublish_entry.get()
         note = self.note_entry.get()
-
+        
         # Check if all fields are filled
         if name and author and publisher and year_publish and note:    
-            # Create a Document instance based on 5 properties
-            self.document = DocumentBase(name,author,publisher,year_publish,note)
-            document_manage._add_document(self.document)
-            messagebox.showinfo("Add document","Add success!")
+            try:
+                year_publish = int(self.yearPublish_entry.get()) # Check if year of publish is a number
+            except ValueError:
+                year_not_int = False
+            if year_not_int==False:
+                messagebox.showerror("Add document","Error! Year of publish must be a number!")
+            else:
+                # Create a Document instance based on 5 properties
+                self.document = DocumentBase(name,author,publisher,year_publish,note)
+                document_manage._add_document(self.document)
+                messagebox.showinfo("Add document","Add success!")
         else:
             messagebox.showerror("Add document","Error! Please fill in all fields!")
-            self.name_entry.delete(0, tk.END)
-            self.author_entry.delete(0, tk.END)
-            self.publisher_entry.delete(0, tk.END)
-            self.yearPublish_entry.delete(0, tk.END)
-            self.note_entry.delete(0, tk.END)
