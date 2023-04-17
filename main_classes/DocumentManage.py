@@ -56,7 +56,7 @@ class DocumentManage():
                         self.__document_list_found.append(document)
                 # Find by year publish
                 elif choice == "yearPublish":
-                    if keyword == document._get_yearPublish():
+                    if int(keyword) == document._get_yearPublish():
                         self.__document_list_found.append(document)
                 elif choice == "note":
                     if keyword in document._get_note():
